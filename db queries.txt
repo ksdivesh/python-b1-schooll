@@ -1,0 +1,57 @@
+SELECT * from table_name
+
+SELECT * from iot_school WHERE column_name operator(=, <, >, IS, !=) value
+Ex: SELECT * from iot_school WHERE school_prefix = 'JMD'
+
+LIKE Query
+sELECT * FROM iot_school WHERE school_email LIKE '%@iot.in%'
+
+
+AND|OR|NOT
+
+AND T & T = T
+    F & F = F
+    T & F = F
+    F & T = F
+
+OR  T || T = T
+    F || T = T
+    T || F = T
+    F || F = F
+	
+Login Example: 
+
+SELECT * FROM `admins` WHERE school_email = 'sarvodya@mailinator.com' AND school_pwd = '123456'
+
+
+UPDATE admins SET school_name = 'XYZ School', school_pwd = '111111' WHERE id = 1
+
+
+SELECT students.student_name, students.student_class, students.student_rollno, (SELECT school_name FROM admins WHERE school_id = students.school_id) AS school_name, (SELECT school_email FROM admins WHERE school_id = students.school_id) AS school_email FROM `students` WHERE student_class = '10'
+
+
+
+JOINS
+SELECT students.student_id, students.student_name, students.student_rollno, students.student_class, admins.school_name, admins.school_email, admins.school_address FROM students 
+INNER JOIN admins
+ON students.school_id = admins.school_id
+
+
+SELECT st.student_id, st.student_name, st.student_rollno, st.student_class, adm.school_name, adm.school_email, adm.school_address FROM students st
+INNER JOIN admins adm
+ON st.school_id = adm.school_id
+
+
+
+FOREIGN KEY
+
+ALTER TABLE `students` 
+ADD  CONSTRAINT `students_admins` FOREIGN KEY (`school_id`) REFERENCES `admins`(`school_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+
+MySQL Connector: 
+https://pypi.org/project/mysql-connector-python/
+
+
+
+
